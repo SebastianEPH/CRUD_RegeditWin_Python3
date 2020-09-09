@@ -1,8 +1,10 @@
+# Create in Python 3.8.5
 # Import Library
 import winreg
 
 # Global variables
-sub_path = r"SOFTWARE\Microsoft\Windows\CurrentVersion\\"
+
+sub_path = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\"
 key = "Run"
 path = sub_path + key
 
@@ -16,11 +18,24 @@ def createKey():
 def setValueEx():   # Only String and ExpandString
     # Example: Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
     # Open key
-    open_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path)    # Error if key is emply
+    opened_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path, 0, winreg.KEY_ALL_ACCESS)    # Error if key is emply
     name_value = "Valor"
     value = "soy un valor"
     # Create value
-    winreg.SetValueEx(open_key, value, 0, winreg.REG_EXPAND_SZ, name_value)
+    winreg.SetValueEx(opened_key, name_value, 0, winreg.REG_EXPAND_SZ, value)
+
+############### DELETE VALUE ################
+def deleteValue():
+    # Example: Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+    # Open key
+    opened_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path, 0, winreg.KEY_ALL_ACCESS)  # Error if key is emply
+    name_value = "Valor"
+    # Create value
+    winreg.DeleteValue(opened_key, name_value)
+
+
+
+
 
 
 # Read Documentation:
