@@ -10,11 +10,6 @@ key = "Run"
 path = sub_path + key
 
 
-def createKey(self):
-    # Example: Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
-    # sub_path can be empty
-    winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
-
 
 ############### SET VALUE EX ################
 def setValueEx(self):
@@ -74,7 +69,6 @@ class WinRegistry:
         for hkey in self.__listHKEY:
             index = self.afterPath.find(hkey)  # getting boot index
             if index != -1:  # Only if it was successful
-                print(hkey)
                 if str(hkey) == 'HKEY_CLASSES_ROOT':
                     self.HKEY = winreg.HKEY_CLASSES_ROOT
                 if str(hkey) == 'HKEY_CURRENT_USER':
@@ -89,23 +83,23 @@ class WinRegistry:
                     self.HKEY = winreg.HKEY_CLASSES_ROOT
                 if str(hkey) == 'HKEY_CURRENT_CONFIG':
                     self.HKEY = winreg.HKEY_CURRENT_CONFIG
-
-                print('>>>>')
-                print(str(self.HKEY))
-                print('<<<<')
                 index = index + len(hkey) + 1  # Index cut
                 end = len(self.afterPath)  # End cut
                 self.afterPath = self.afterPath[index:end]  # cut path
 
+    def __format_afterPath(self):
+        afterPath = self.afterPath
+        if afterPath != "":
+            return afterPath + "\\"
+        else:
+            return afterPath
 
     def create_key(self, keyName):
-        if self.afterPath != "":
-            self.afterPath = self.afterPath + "\\"
-        winreg.CreateKeyEx(self.HKEY, self.afterPath + keyName, 0, winreg.KEY_ALL_ACCESS)
+        winreg.CreateKeyEx(self.HKEY, self.__format_afterPath() + keyName, 0, winreg.KEY_ALL_ACCESS)
 
     def delete_key(self, keyName):
-        #winreg.DeleteKeyEx(self.HKEY, self.afterPath, 0, winreg.KEY_ALL_ACCESS)
-        pass
+        winreg.DeleteKeyEx(self.HKEY, self.__format_afterPath() + keyName, winreg.KEY_ALL_ACCESS, 0)
+
     def read_value(self, nameValue):
         pass
 
@@ -133,11 +127,10 @@ class WinRegistry:
 #hhh = winreg.HKEY_CURRENT_USER
 #winreg.CreateKeyEx(hhh, "hola\ho", 0, winreg.KEY_ALL_ACCESS)
 
-path3 = "Computer\HKEY_CURRENT_USER" + "\dsfsdf"
+path3 = "Computer\HKEY_CURRENT_USER"
 h = WinRegistry(path3)
-print(h.HKEY)
-print(h.afterPath)
-h.create_key('hola')
+#h.create_key('hola')
+h.delete_key('hola')
 
 
 """
@@ -153,4 +146,4 @@ def saveKey():
     """
 
 # Read Documentation:
-# https://docs.python.org/3/library/winreg.html
+#
