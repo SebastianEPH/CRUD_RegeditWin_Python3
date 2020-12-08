@@ -4,12 +4,7 @@ import winreg
 
 # Global variables
 from msilib.schema import File
-
-sub_path = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\"
-key = "Run"
-path = sub_path + key
-
-
+path = ""
 
 ############### SET VALUE EX ################
 def setValueEx(self):
@@ -71,18 +66,20 @@ class WinRegistry:
             if index != -1:  # Only if it was successful
                 if str(hkey) == 'HKEY_CLASSES_ROOT':
                     self.HKEY = winreg.HKEY_CLASSES_ROOT
-                if str(hkey) == 'HKEY_CURRENT_USER':
+                elif str(hkey) == 'HKEY_CURRENT_USER':
                     self.HKEY = winreg.HKEY_CURRENT_USER
-                if str(hkey) == 'HKEY_LOCAL_MACHINE':
+                elif str(hkey) == 'HKEY_LOCAL_MACHINE':
                     self.HKEY = winreg.HKEY_LOCAL_MACHINE
-                if str(hkey) == 'HKEY_DYN_DATA':
+                elif str(hkey) == 'HKEY_DYN_DATA':
                     self.HKEY = winreg.HKEY_DYN_DATA
-                if str(hkey) == 'HKEY_PERFORMANCE_DATA':
+                elif str(hkey) == 'HKEY_PERFORMANCE_DATA':
                     self.HKEY = winreg.HKEY_PERFORMANCE_DATA
-                if str(hkey) == 'HKEY_USERS':
+                elif str(hkey) == 'HKEY_USERS':
                     self.HKEY = winreg.HKEY_CLASSES_ROOT
-                if str(hkey) == 'HKEY_CURRENT_CONFIG':
+                elif str(hkey) == 'HKEY_CURRENT_CONFIG':
                     self.HKEY = winreg.HKEY_CURRENT_CONFIG
+                else:
+                    print('Error path invalido')
                 index = index + len(hkey) + 1  # Index cut
                 end = len(self.afterPath)  # End cut
                 self.afterPath = self.afterPath[index:end]  # cut path
@@ -104,7 +101,10 @@ class WinRegistry:
         pass
 
     def create_value_String(self, nameValue, value):
-        pass
+        self.create_key('')
+        opened_key = winreg.OpenKey(self.HKEY, self.afterPath, 0, winreg.KEY_ALL_ACCESS)
+        winreg.SetValueEx(opened_key, nameValue, 0, winreg.REG_SZ, value)
+        opened_key.Close()
 
     def create_value_Binary(self, nameValue, value):
         pass
@@ -127,10 +127,24 @@ class WinRegistry:
 #hhh = winreg.HKEY_CURRENT_USER
 #winreg.CreateKeyEx(hhh, "hola\ho", 0, winreg.KEY_ALL_ACCESS)
 
-path3 = "Computer\HKEY_CURRENT_USER"
+
+path3 = "Computer\HKEY_CURRENT_USER\soy_principal"
 h = WinRegistry(path3)
-#h.create_key('hola')
-h.delete_key('hola')
+h.create_value_String('namevalue', 'soy valor')
+"""
+nameValue  = "soy el nombre"
+setValue()
+print(nameValue)
+print(value)
+print(self.HKEY)
+print(self.afterPath)
+
+opened_key = winreg.OpenKey(self.HKEY, self.afterPath, 0, winreg.KEY_ALL_ACCESS)  # Error if key is emply
+# Create value
+winreg.SetValueEx(opened_key, nameValue, 0, winreg.REG_EXPAND_SZ, value)
+#opened_key.Close()
+"""
+
 
 
 """
