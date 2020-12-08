@@ -58,22 +58,67 @@ def deleteKeyEx(self):
     winreg.DeleteKeyEx(winreg.HKEY_CURRENT_USER, path, 0, winreg.KEY_ALL_ACCESS)
 
 
-class WinRegistry(path):
-    def __init__(self):
+class WinRegistry:
+    def __init__(self, path):
         self.path = path
-        pass
-    def create_key(self):
-        pass
-    def delete_key(self):
-        pass
-    def read_value(self):
-        pass
-    def create_value(self):
-        pass
-    def delete_value(self):
-        pass
+        self.HKEY = ""
+
+    def get_HKEY_and_formatPath(self):
+        index = -1
+        subkeyLength = -1
+        HKEY = {
+            'CLASSES_ROOT': [
+                r'HKEY_CLASSES_ROOT'],
+            'CURRENT_USER': [
+                r'HKEY_CURRENT_USER'],
+            'LOCAL_MACHINE': [
+                r'HKEY_LOCAL_MACHINE'],
+            'USERS': [
+                r'HKEY_USERS'],
+            'CURRENT_CONFIG': [
+                r'HKEY_CURRENT_CONFIG']
+        }
+        for sub in HKEY:
+            for s in HKEY[sub]:
+                index = self.path.find(s)  # getting boot index
+                if index != -1:  # Only if it was successful
+                    self.HKEY = s
+                    total = index + len(s)
+                    self.path = self.path[total:len(self.path)]
 
 
+
+
+
+
+
+
+    def create_key(self, keyName):
+        pass
+    def delete_key(self, keyName):
+        pass
+    def read_value(self, nameValue):
+        pass
+    def create_value_String(self, nameValue, value):
+        pass
+    def create_value_Binary(self, nameValue, value):
+        pass
+    def create_value_DWORD(self, nameValue, value):
+        pass
+    def create_value_QWORD(self, nameValue, value):
+        pass
+    def create_value_MultiString(self, nameValue, value):
+        pass
+    def create_value_ExpandableString(self, nameValue, value):
+        pass
+    def delete_value(self, nameValue):
+        pass
+
+path3 ="Computer\HKEY_CURRENT_USER\Console"
+h = WinRegistry(path3)
+h.get_HKEY_and_formatPath()
+print(h.HKEY)
+print(h.path)
 
 
 """
@@ -87,7 +132,6 @@ def saveKey():
     #winreg.LoadKey(opened_key, name_value, file)
     winreg.SaveKey(opened_key, file.name)
     """
-
 
 # Read Documentation:
 # https://docs.python.org/3/library/winreg.html
