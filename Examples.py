@@ -60,13 +60,11 @@ def deleteKeyEx(self):
 
 class WinRegistry:
     def __init__(self, path):
-        self.path = path
+        self.alferPath = path
         self.HKEY = ""
-
-    def get_HKEY_and_formatPath(self):
-        index = -1
-        subkeyLength = -1
-        HKEY = {
+        self.ID = 0
+        id = 0
+        listHKEY = {
             'CLASSES_ROOT': [
                 r'HKEY_CLASSES_ROOT'],
             'CURRENT_USER': [
@@ -78,20 +76,16 @@ class WinRegistry:
             'CURRENT_CONFIG': [
                 r'HKEY_CURRENT_CONFIG']
         }
-        for sub in HKEY:
-            for s in HKEY[sub]:
-                index = self.path.find(s)  # getting boot index
+        for sub in listHKEY:
+            for s in listHKEY[sub]:
+                id = id + 1
+                index = self.alferPath.find(s)  # getting boot index
                 if index != -1:  # Only if it was successful
-                    self.HKEY = s
-                    total = index + len(s)
-                    self.path = self.path[total:len(self.path)]
-
-
-
-
-
-
-
+                    self.HKEY = s   # get HKEY
+                    self.ID = id    # get id
+                    index = index + len(s)+1    # Index cut
+                    end = len(self.alferPath)   # End cut
+                    self.alferPath = self.alferPath[index:end]   # cut path
 
     def create_key(self, keyName):
         pass
@@ -114,11 +108,12 @@ class WinRegistry:
     def delete_value(self, nameValue):
         pass
 
-path3 ="Computer\HKEY_CURRENT_USER\Console"
+path3 ="Computer\HKEY_LOCAL_MACHINE\Console"
 h = WinRegistry(path3)
-h.get_HKEY_and_formatPath()
+#h.get_HKEY_and_formatPath()
 print(h.HKEY)
-print(h.path)
+print(h.alferPath)
+print(h.ID)
 
 
 """
