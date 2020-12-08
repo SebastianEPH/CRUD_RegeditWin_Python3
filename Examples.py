@@ -122,7 +122,7 @@ class WinRegistry:
         self.__createvalue(winreg.REG_MULTI_SZ, nameValue, value)
 
     def create_value_ExpandableString(self, nameValue, value):
-        pass
+        self.__createvalue(winreg.REG_EXPAND_SZ, nameValue, value)
 
     def delete_value(self, nameValue):
         pass
