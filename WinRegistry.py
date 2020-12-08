@@ -38,48 +38,52 @@ class WinRegistry:
                 end = len(self.afterPath)  # End cut
                 self.afterPath = self.afterPath[index:end]  # cut path
 
-    def __format_afterPath(self):
+    def __format_after_path(self):
         afterPath = self.afterPath
         if afterPath != "":
             return afterPath + "\\"
         else:
             return afterPath
 
-    def __createvalue(self, type, nameValue, value):
+    def __create_value(self, type, nameValue, value):
         self.create_key('')
         opened_key = winreg.OpenKey(self.HKEY, self.afterPath, 0, winreg.KEY_ALL_ACCESS)
         winreg.SetValueEx(opened_key, nameValue, 0, type, value)
         opened_key.Close()
 
     def create_key(self, keyName):
-        winreg.CreateKeyEx(self.HKEY, self.__format_afterPath() + keyName, 0, winreg.KEY_ALL_ACCESS)
+        winreg.CreateKeyEx(self.HKEY, self.__format_after_path() + keyName, 0, winreg.KEY_ALL_ACCESS)
 
     def delete_key(self, keyName):
         try:
-            winreg.DeleteKeyEx(self.HKEY, self.__format_afterPath() + keyName, winreg.KEY_ALL_ACCESS, 0)
+            winreg.DeleteKeyEx(self.HKEY, self.__format_after_path() + keyName, winreg.KEY_ALL_ACCESS, 0)
         except:
             pass
 
     def read_value(self, nameValue):
-        pass
+        # Open key
+        opened_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, self.afterPath, 0,winreg.KEY_ALL_ACCESS)  # Error if key is emply
+        # Create value
+        f = winreg.QueryValueEx(opened_key, nameValue)
+        print(f)
 
-    def create_value_String(self, nameValue, value):
-        self.__createvalue(winreg.REG_SZ, nameValue, value)
+    def set_value_String(self, nameValue, value):
+        self.__create_value(winreg.REG_SZ, nameValue, value)
 
-    def create_value_Binary(self, nameValue, value):
-        self.__createvalue(winreg.REG_BINARY, nameValue, value)
+    def set_value_Binary(self, nameValue, value):
+        self.__create_value(winreg.REG_BINARY, nameValue, value)
 
-    def create_value_DWORD(self, nameValue, value):
-        self.__createvalue(winreg.REG_DWORD, nameValue, value)
+    def set_value_DWORD(self, nameValue, value):
+        self.__create_value(winreg.REG_DWORD, nameValue, value)
 
-    def create_value_QWORD(self, nameValue, value):
-        self.__createvalue(winreg.REG_QWORD, nameValue, value)
+    def set_value_QWORD(self, nameValue, value):
+        self.__create_value(winreg.REG_QWORD, nameValue, value)
 
-    def create_value_MultiString(self, nameValue, value):
-        self.__createvalue(winreg.REG_MULTI_SZ, nameValue, value)
+    def set_value_MultiString(self, nameValue, value):
+        self.__create_value(winreg.REG_MULTI_SZ, nameValue, value)
 
-    def create_value_ExpandableString(self, nameValue, value):
-        self.__createvalue(winreg.REG_EXPAND_SZ, nameValue, value)
+    def set_value_ExpandableString(self, nameValue, value):
+        self.__create_value(winreg.REG_EXPAND_SZ, nameValue, value)
 
     def delete_value(self, nameValue):
         try:
@@ -99,32 +103,7 @@ path3 = "Computer\HKEY_CURRENT_USER\hey"
 h = WinRegistry(path3)
 #https://stackoverflow.com/questions/27534005/how-to-read-reg-binary-type-values-in-string-format-from-registry-in-python
 #g = b'v\x00l\x00c\x00.\x00e\x00x\x00e\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xf0\x00\x00\x00\x85\x00\x00\x00\x10\x03\x00\x00<\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xf8\x00\x00\x00\xa4\x00\x00\x00i\x03\x00\x00\x84\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00'
-#h.create_value_Binary('namevaluedd', g)
-h.delete_value("123")
-"""
-nameValue  = "soy el nombre"
-setValue()
-print(nameValue)
-print(value)
-print(self.HKEY)
-print(self.afterPath)
-
-opened_key = winreg.OpenKey(self.HKEY, self.afterPath, 0, winreg.KEY_ALL_ACCESS)  # Error if key is emply
-# Create value
-winreg.SetValueEx(opened_key, nameValue, 0, winreg.REG_EXPAND_SZ, value)
-#opened_key.Close()
+#h.set_value_Binary('namevaluedd', g)
+h.read_value('asd')
 
 
-def saveKey():
-    # Example: Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
-    # Open key
-    opened_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path, 0, winreg.KEY_ALL_ACCESS)  # Error if key is emply
-    name_value = "Valor"
-    # Create value
-    file = open("file.txt", "w")  # Read file
-    #winreg.LoadKey(opened_key, name_value, file)
-    winreg.SaveKey(opened_key, file.name)
-    """
-
-# Read Documentation:
-#
