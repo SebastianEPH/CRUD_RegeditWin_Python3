@@ -110,7 +110,7 @@ class WinRegistry:
         self.__createvalue(winreg.REG_SZ, nameValue, value)
 
     def create_value_Binary(self, nameValue, value):
-        pass
+        self.__createvalue(winreg.REG_BINARY, nameValue, value)
 
     def create_value_DWORD(self, nameValue, value):
         pass
