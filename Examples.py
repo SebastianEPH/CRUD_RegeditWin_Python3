@@ -60,60 +60,84 @@ def deleteKeyEx(self):
 
 class WinRegistry:
     def __init__(self, path):
-        self.alferPath = path
-        self.HKEY = ""
-        self.ID = 0
-        id = 0
-        listHKEY = {
-            'CLASSES_ROOT': [
-                r'HKEY_CLASSES_ROOT'],
-            'CURRENT_USER': [
-                r'HKEY_CURRENT_USER'],
-            'LOCAL_MACHINE': [
-                r'HKEY_LOCAL_MACHINE'],
-            'USERS': [
-                r'HKEY_USERS'],
-            'CURRENT_CONFIG': [
-                r'HKEY_CURRENT_CONFIG']
-        }
-        for sub in listHKEY:
-            for s in listHKEY[sub]:
-                id = id + 1
-                index = self.alferPath.find(s)  # getting boot index
-                if index != -1:  # Only if it was successful
-                    self.HKEY = s   # get HKEY
-                    self.ID = id    # get id
-                    index = index + len(s)+1    # Index cut
-                    end = len(self.alferPath)   # End cut
-                    self.alferPath = self.alferPath[index:end]   # cut path
+        self.afterPath = path
+        self.HKEY = None
+        self.__listHKEY = [
+            'HKEY_CLASSES_ROOT',
+            'HKEY_CURRENT_USER',
+            'HKEY_LOCAL_MACHINE',
+            'HKEY_DYN_DATA',
+            'HKEY_PERFORMANCE_DATA',
+            'HKEY_USERS',
+            'HKEY_CURRENT_CONFIG']
+
+        for hkey in self.__listHKEY:
+            index = self.afterPath.find(hkey)  # getting boot index
+            if index != -1:  # Only if it was successful
+                print(hkey)
+                if str(hkey) == 'HKEY_CLASSES_ROOT':
+                    self.HKEY = winreg.HKEY_CLASSES_ROOT
+                if str(hkey) == 'HKEY_CURRENT_USER':
+                    self.HKEY = winreg.HKEY_CURRENT_USER
+                if str(hkey) == 'HKEY_LOCAL_MACHINE':
+                    self.HKEY = winreg.HKEY_LOCAL_MACHINE
+                if str(hkey) == 'HKEY_DYN_DATA':
+                    self.HKEY = winreg.HKEY_DYN_DATA
+                if str(hkey) == 'HKEY_PERFORMANCE_DATA':
+                    self.HKEY = winreg.HKEY_PERFORMANCE_DATA
+                if str(hkey) == 'HKEY_USERS':
+                    self.HKEY = winreg.HKEY_CLASSES_ROOT
+                if str(hkey) == 'HKEY_CURRENT_CONFIG':
+                    self.HKEY = winreg.HKEY_CURRENT_CONFIG
+
+                print('>>>>')
+                print(str(self.HKEY))
+                print('<<<<')
+                index = index + len(hkey) + 1  # Index cut
+                end = len(self.afterPath)  # End cut
+                self.afterPath = self.afterPath[index:end]  # cut path
+
 
     def create_key(self, keyName):
-        pass
+        if self.afterPath != "":
+            self.afterPath = self.afterPath + "\\"
+        winreg.CreateKeyEx(self.HKEY, self.afterPath + keyName, 0, winreg.KEY_ALL_ACCESS)
+
     def delete_key(self, keyName):
+        #winreg.DeleteKeyEx(self.HKEY, self.afterPath, 0, winreg.KEY_ALL_ACCESS)
         pass
     def read_value(self, nameValue):
         pass
+
     def create_value_String(self, nameValue, value):
         pass
+
     def create_value_Binary(self, nameValue, value):
         pass
+
     def create_value_DWORD(self, nameValue, value):
         pass
+
     def create_value_QWORD(self, nameValue, value):
         pass
+
     def create_value_MultiString(self, nameValue, value):
         pass
+
     def create_value_ExpandableString(self, nameValue, value):
         pass
+
     def delete_value(self, nameValue):
         pass
 
-path3 ="Computer\HKEY_LOCAL_MACHINE\Console"
+#hhh = winreg.HKEY_CURRENT_USER
+#winreg.CreateKeyEx(hhh, "hola\ho", 0, winreg.KEY_ALL_ACCESS)
+
+path3 = "Computer\HKEY_CURRENT_USER" + "\dsfsdf"
 h = WinRegistry(path3)
-#h.get_HKEY_and_formatPath()
 print(h.HKEY)
-print(h.alferPath)
-print(h.ID)
+print(h.afterPath)
+h.create_key('hola')
 
 
 """
