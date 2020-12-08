@@ -116,10 +116,10 @@ class WinRegistry:
         self.__createvalue(winreg.REG_DWORD, nameValue, value)
 
     def create_value_QWORD(self, nameValue, value):
-        pass
+        self.__createvalue(winreg.REG_QWORD, nameValue, value)
 
     def create_value_MultiString(self, nameValue, value):
-        pass
+        self.__createvalue(winreg.REG_MULTI_SZ, nameValue, value)
 
     def create_value_ExpandableString(self, nameValue, value):
         pass
