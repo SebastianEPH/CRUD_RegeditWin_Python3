@@ -91,6 +91,12 @@ class WinRegistry:
         else:
             return afterPath
 
+    def __createvalue(self, type, nameValue, value):
+        self.create_key('')
+        opened_key = winreg.OpenKey(self.HKEY, self.afterPath, 0, winreg.KEY_ALL_ACCESS)
+        winreg.SetValueEx(opened_key, nameValue, 0, type, value)
+        opened_key.Close()
+
     def create_key(self, keyName):
         winreg.CreateKeyEx(self.HKEY, self.__format_afterPath() + keyName, 0, winreg.KEY_ALL_ACCESS)
 
@@ -101,10 +107,7 @@ class WinRegistry:
         pass
 
     def create_value_String(self, nameValue, value):
-        self.create_key('')
-        opened_key = winreg.OpenKey(self.HKEY, self.afterPath, 0, winreg.KEY_ALL_ACCESS)
-        winreg.SetValueEx(opened_key, nameValue, 0, winreg.REG_SZ, value)
-        opened_key.Close()
+        self.__createvalue(winreg.REG_SZ, nameValue, value)
 
     def create_value_Binary(self, nameValue, value):
         pass
@@ -128,7 +131,7 @@ class WinRegistry:
 #winreg.CreateKeyEx(hhh, "hola\ho", 0, winreg.KEY_ALL_ACCESS)
 
 
-path3 = "Computer\HKEY_CURRENT_USER\soy_principal"
+path3 = "Computer\HKEY_CURRENT_USER\hey"
 h = WinRegistry(path3)
 h.create_value_String('namevalue', 'soy valor')
 """
@@ -143,11 +146,8 @@ opened_key = winreg.OpenKey(self.HKEY, self.afterPath, 0, winreg.KEY_ALL_ACCESS)
 # Create value
 winreg.SetValueEx(opened_key, nameValue, 0, winreg.REG_EXPAND_SZ, value)
 #opened_key.Close()
-"""
 
 
-
-"""
 def saveKey():
     # Example: Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
     # Open key
