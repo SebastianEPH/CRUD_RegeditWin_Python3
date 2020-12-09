@@ -131,51 +131,66 @@ k.set_value_QWORD(nameValue, value)
 
 </details>
 <details>
-  <summary>📚 Set value Multi-String</summary>
+  <summary><b>Set value Multi-String</b></summary>
 
+## Código de ejemplo
 
-**Few steps before getting started...**
-- First, you should obtain token for your bot from [BotFather](https://t.me/BotFather).
-- Install latest stable version of aiogram, simply running `pip install aiogram`
+````py
+path = r'Computer\HKEY_CURRENT_USER\SOFTWARE\test'
+nameValue = 'TypeMultiString'
+value = ['linea 1', 'linea 2', 'linea fin']
+k = WinRegistry(path)
+k.set_value_MultiString(nameValue, value)
+````
+### Antes 
+![](https://imgur.com/sCNJaNh.png)
 
-### Simple [`getMe`](https://core.telegram.org/bots/api#getme) request
-
-
-</details>
-<details>
-  <summary>📚 Set value Expandable-String</summary>
-
-
-**Few steps before getting started...**
-- First, you should obtain token for your bot from [BotFather](https://t.me/BotFather).
-- Install latest stable version of aiogram, simply running `pip install aiogram`
-
-### Simple [`getMe`](https://core.telegram.org/bots/api#getme) request
-
+### Despues 
+![](https://imgur.com/VeT5cns.png)
+![](https://imgur.com/cv7NzKt.png)
 
 </details>
 <details>
-  <summary>📚 Delete Value</summary>
+  <summary><b>Set value Expandable-String</b></summary>
 
+## Código de ejemplo
 
-**Few steps before getting started...**
-- First, you should obtain token for your bot from [BotFather](https://t.me/BotFather).
-- Install latest stable version of aiogram, simply running `pip install aiogram`
+````py
+path = r'Computer\HKEY_CURRENT_USER\SOFTWARE\test'
+nameValue = 'TypeExpandableString'
+value = "texto largo..."
+k = WinRegistry(path)
+k.set_value_ExpandableString(nameValue, value)
+````
+### Antes 
+![](https://imgur.com/8GSRnC8.png)
 
-### Simple [`getMe`](https://core.telegram.org/bots/api#getme) request
+### Despues 
+![](https://imgur.com/pmowP4n.png)
 
 </details>
 <details>
-  <summary>📚 Read Value</summary>
+  <summary><b>Delete Value</b></summary>
 
+## Código de ejemplo
 
-**Few steps before getting started...**
-- First, you should obtain token for your bot from [BotFather](https://t.me/BotFather).
-- Install latest stable version of aiogram, simply running `pip install aiogram`
+````py
+path = r'Computer\HKEY_CURRENT_USER\SOFTWARE\test'
+nameValue = "name"
+k = WinRegistry(path)
+k.delete_value(nameValue)
+````
 
-### Simple [`getMe`](https://core.telegram.org/bots/api#getme) request
+</details>
+<details>
+  <summary><b>Read Value</b></summary>
 
-
+````py
+path = r'Computer\HKEY_CURRENT_USER\SOFTWARE\test'
+nameValue = "name"
+k = WinRegistry(path)
+k.delete_value(nameValue)
+````
 </details>
 
 ___

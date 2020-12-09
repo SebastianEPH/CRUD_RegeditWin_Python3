@@ -95,12 +95,11 @@ class WinRegistry:
             pass
 
 
-path = r'Computer\HKEY_CURRENT_USER\SOFTWARE\test'
-nameValue = 'TypeQWORD'
-value = 45545454545
-k = WinRegistry(path)
-k.set_value_QWORD(nameValue, value)
 
+path = r'Computer\HKEY_CURRENT_USER\SOFTWARE\test'
+nameValue = "name"
+k = WinRegistry(path)
+k.read_value(nameValue)
 
 # (nameValue, value)
 
