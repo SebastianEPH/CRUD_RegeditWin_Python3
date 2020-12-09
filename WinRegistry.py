@@ -65,7 +65,8 @@ class WinRegistry:
         opened_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, self.afterPath, 0,winreg.KEY_ALL_ACCESS)  # Error if key is emply
         # Create value
         f = winreg.QueryValueEx(opened_key, nameValue)
-        print(f)
+        print(f[0])
+        return f[0]
 
     def set_value_String(self, nameValue, value):
         self.__create_value(winreg.REG_SZ, nameValue, value)
@@ -96,11 +97,13 @@ class WinRegistry:
 
 
 
-path = r'Computer\HKEY_CURRENT_USER\SOFTWARE\test'
-nameValue = "name"
+path = r'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Hide\TelegramBot'
+nameValue = "token"
 k = WinRegistry(path)
+
 print(k.read_value(nameValue))
 
+#print(str(r[0]))
 # (nameValue, value)
 
 
