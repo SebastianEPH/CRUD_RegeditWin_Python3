@@ -96,10 +96,13 @@ class WinRegistry:
 
 
 path = r'Computer\HKEY_CURRENT_USER\SOFTWARE\test'
-nameValue = 'config'
-value = "soy un valor String"
+nameValue = 'TypeQWORD'
+value = 45545454545
 k = WinRegistry(path)
-k.set_value_String(nameValue, value)
+k.set_value_QWORD(nameValue, value)
+
+
+# (nameValue, value)
 
 
 # hhh = winreg.HKEY_CURRENT_USER

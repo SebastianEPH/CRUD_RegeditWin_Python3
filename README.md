@@ -74,37 +74,60 @@ k.set_value_String(nameValue, value)
 <details>
   <summary><b>Set value Binary</b></summary>
 
+## Código de ejemplo
 
-**Few steps before getting started...**
-- First, you should obtain token for your bot from [BotFather](https://t.me/BotFather).
-- Install latest stable version of aiogram, simply running `pip install aiogram`
+````py
+path = r'Computer\HKEY_CURRENT_USER\SOFTWARE\test'
+nameValue = 'Typebinary'
+value = b'v\x00l\x00c\x00.\x00e\x00x\x00e\x00\x00\x00\x00'
+k = WinRegistry(path)
+k.set_value_Binary(nameValue, value)
+````
+### Antes 
+![](https://imgur.com/sCNJaNh.png)
 
-### Simple [`getMe`](https://core.telegram.org/bots/api#getme) request
+### Despues 
+![](https://imgur.com/ywd6yvK.png)
 
-
-</details>
-<details>
-  <summary>📚 Set value DWORD</summary>
-
-
-**Few steps before getting started...**
-- First, you should obtain token for your bot from [BotFather](https://t.me/BotFather).
-- Install latest stable version of aiogram, simply running `pip install aiogram`
-
-### Simple [`getMe`](https://core.telegram.org/bots/api#getme) request
-
+![](https://imgur.com/GMdOtNj.png)
 
 </details>
 <details>
-  <summary>📚 Set value QWORD</summary>
+  <summary><b>Set value DWORD</b></summary>
 
+## Código de ejemplo
 
-**Few steps before getting started...**
-- First, you should obtain token for your bot from [BotFather](https://t.me/BotFather).
-- Install latest stable version of aiogram, simply running `pip install aiogram`
+````py
+path = r'Computer\HKEY_CURRENT_USER\SOFTWARE\test'
+nameValue = 'TypeDWORD'
+value = 45
+k = WinRegistry(path)
+k.set_value_DWORD(nameValue, value)
+````
+### Antes 
+![](https://imgur.com/sCNJaNh.png)
 
-### Simple [`getMe`](https://core.telegram.org/bots/api#getme) request
+### Despues 
+![](https://imgur.com/lFnLHzp.png)
 
+</details>
+<details>
+  <summary><b>Set value QWORD</b></summary>
+
+## Código de ejemplo
+
+````py
+path = r'Computer\HKEY_CURRENT_USER\SOFTWARE\test'
+nameValue = 'TypeQWORD'
+value = 45545454545
+k = WinRegistry(path)
+k.set_value_QWORD(nameValue, value)
+````
+### Antes 
+![](https://imgur.com/sCNJaNh.png)
+
+### Despues 
+![](https://imgur.com/IYz3D2A.png)
 
 </details>
 <details>
@@ -154,3 +177,9 @@ k.set_value_String(nameValue, value)
 
 
 </details>
+
+___
+
+## Versión de esta lib pero en en C# .net
+### Windows Registry Tools C# || [ link del repositorio](https://github.com/SebastianEPH/WindowsRegistryTools_Library)
+
