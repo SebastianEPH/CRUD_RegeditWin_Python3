@@ -185,11 +185,13 @@ k.delete_value(nameValue)
 <details>
   <summary><b>Read Value</b></summary>
 
+## Código de ejemplo
+
 ````py
 path = r'Computer\HKEY_CURRENT_USER\SOFTWARE\test'
 nameValue = "name"
 k = WinRegistry(path)
-k.delete_value(nameValue)
+print(k.read_value(nameValue))
 ````
 </details>
 
